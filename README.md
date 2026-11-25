@@ -27,7 +27,15 @@ A lightweight, **100% on-prem**, Docker-ready browser tool that removes shadows 
 
 ## Quick Start
 
-### 1. Docker Compose (Recommended for On-Prem Hosting)
+### 1. Prebuilt Image (GHCR)
+```bash
+docker run -d --name docclear -p 8080:80 --read-only \
+  --tmpfs /var/cache/nginx --tmpfs /var/run \
+  ghcr.io/yonathan-lie/docclear:latest
+```
+Then open `http://localhost:8080`.
+
+### 2. Docker Compose (Build Locally)
 ```bash
 docker compose up -d --build
 ```
@@ -35,14 +43,14 @@ Then open `http://localhost:8080` (override port with `PORT=3000 docker compose 
 
 The image is built on `nginx:1.27-alpine` (~25 MB) and runs with a read-only root filesystem.
 
-### 2. Docker CLI
+### 3. Docker CLI (Build Locally)
 ```bash
 docker build -t docclear .
 docker run -d --name docclear -p 8080:80 --read-only \
   --tmpfs /var/cache/nginx --tmpfs /var/run docclear
 ```
 
-### 3. Local Without Docker
+### 4. Local Without Docker
 Double-click **`run.bat`** (Windows) or open **`index.html`** directly in any modern browser. Everything works offline with zero build steps.
 
 ---

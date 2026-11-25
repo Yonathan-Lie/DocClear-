@@ -37,11 +37,20 @@ test('createZip builds valid PKZIP archive and round-trips via Expand-Archive', 
     const extractDir = path.join(tmpDir, 'extracted');
     fs.writeFileSync(zipPath, zipBytes);
 
-    execFileSync('powershell', [
-      '-NoProfile',
-      '-Command',
-      `Expand-Archive -LiteralPath '${zipPath.replace(/'/g, "''")}' -DestinationPath '${extractDir.replace(/'/g, "''")}' -Force`,
-    ]);
+    if (process.platform === 'win32') {
+      execFileSync('powershell', [
+        '-NoProfile',
+        '-Command',
+        `Expand-Archive -LiteralPath '${zipPath.replace(/'/g, "''")}' -DestinationPath '${extractDir.replace(/'/g, "''")}' -Force`,
+      ]);
+    } else {
+      execFileSync('python3', [
+        '-c',
+        'import sys, zipfile; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])',
+        zipPath,
+        extractDir,
+      ]);
+    }
 
     const gotA = fs.readFileSync(path.join(extractDir, 'doc1_clean.txt'));
     const gotB = fs.readFileSync(path.join(extractDir, 'folder', 'doc2_clean.png'));
