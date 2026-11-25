@@ -1,0 +1,9 @@
+.git
+.gitignore
+tests
+docs
+README.md
+run.bat
+docker-compose.yml
+.dockerignore
+package.json

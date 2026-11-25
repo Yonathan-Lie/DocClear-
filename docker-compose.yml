@@ -1,0 +1,12 @@
+services:
+  docclear:
+    build: .
+    image: docclear:latest
+    container_name: docclear
+    ports:
+      - "${PORT:-8080}:80"
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx:rw,noexec,nosuid,size=16m
+      - /var/run:rw,noexec,nosuid,size=4m
+    restart: unless-stopped

@@ -1,0 +1,12 @@
+{
+  "name": "docclear",
+  "version": "1.0.0",
+  "description": "100% on-prem browser-based document shadow removal and scan enhancement tool",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/processor.test.js tests/zip.test.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
